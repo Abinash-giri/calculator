@@ -19,17 +19,63 @@ class Calculator:
         return self._v1 / self._v2
 
 
-def main():
-    print("***** Prcoessing start *****")
-    value1, value2 = [int(x) for x in input('Enter two values for operation: ').split()]
-    print(f'First variable = {value1}, Second variable = {value2}')
+def get_user_inputs():
+    return [int(x) for x in input('Enter two values for operation: ').split()]
+
+
+def perform_operation(user_choice, value1, value2):
     cal_obj = Calculator(value1, value2)
-    print(f'''
-        Addition = {cal_obj.addition()},
-        Substraction = {cal_obj.substraction()},
-        Multiplication = {cal_obj.multiplication()},
-        Division = {cal_obj.divison()}
-        ''')
+    if user_choice == 1:
+        print(f'Result = {cal_obj.addition()}')
+    elif user_choice == 2:
+        print(f'Result = {cal_obj.substraction()}')
+    elif user_choice == 3:
+        print(f'Result = {cal_obj.multiplication()}')
+    elif user_choice == 4:
+        print(f'Result = {cal_obj.divison()}')
+
+
+def check_user_interest():
+    user_continue = input()
+    if user_continue == 'Y':
+        print('Selected Yes...')
+        return True
+    elif user_continue == 'N':
+        print('Selected No...')
+        return False
+    else:
+        print(f'Invalid choice - {user_continue}')              
+
+
+def start_calculator(choice_dict):
+        print("Choose option: ")
+        print(choice_dict)
+        user_choice = int(input("Your choice: "))
+        if user_choice in choice_dict.keys():
+            print(f'Option picked: {user_choice} - {choice_dict[user_choice]}')
+            value1, value2 = get_user_inputs()
+            #print(f'First variable = {value1}, Second variable = {value2}')
+            perform_operation(user_choice, value1, value2)
+            print("Wish to continue? (Y/N)")
+            flag = check_user_interest()
+            if flag == True:
+                return True
+            else:
+                return False
+        else:
+            print("Invalid choice...Wish to continue? (Y/N)")
+            check_user_interest()
+            
+            
+
+def main():
+    print("***** Calculator Processing start *****")
+    choice_dict = {1 : "Addition", 2 : "Substraction", 3 : "Multiplication" ,\
+                   4 : "Division"}
+    flag = start_calculator(choice_dict)
+    while flag == True:
+        flag = start_calculator(choice_dict)
+    print("***** Calculator Processing end *****")
 
 
 if __name__ == "__main__":
