@@ -37,34 +37,39 @@ def perform_operation(user_choice, value1, value2):
 
 def check_user_interest():
     user_continue = input()
-    if user_continue == 'Y':
+    if user_continue.upper() == 'Y':
         print('Selected Yes...')
         return True
-    elif user_continue == 'N':
+    elif user_continue.upper() == 'N':
         print('Selected No...')
         return False
     else:
-        print(f'Invalid choice - {user_continue}')              
+        print(f'Invalid choice - {user_continue}')
+        return False           
 
 
 def start_calculator(choice_dict):
-        print("Choose option: ")
-        print(choice_dict)
-        user_choice = int(input("Your choice: "))
-        if user_choice in choice_dict.keys():
-            print(f'Option picked: {user_choice} - {choice_dict[user_choice]}')
-            value1, value2 = get_user_inputs()
-            #print(f'First variable = {value1}, Second variable = {value2}')
-            perform_operation(user_choice, value1, value2)
-            print("Wish to continue? (Y/N)")
-            flag = check_user_interest()
-            if flag == True:
-                return True
-            else:
-                return False
+    print("Choose option: ")
+    print(choice_dict)
+    user_choice = int(input("Your choice: "))
+    if user_choice in choice_dict.keys():
+        print(f'Option picked: {user_choice} - {choice_dict[user_choice]}')
+        value1, value2 = get_user_inputs()
+        #print(f'First variable = {value1}, Second variable = {value2}')
+        perform_operation(user_choice, value1, value2)
+        print("Wish to continue? (Y/N)")
+        flag = check_user_interest()
+        if flag == True:
+            return True
         else:
-            print("Invalid choice...Wish to continue? (Y/N)")
-            check_user_interest()
+            return False
+    else:
+        print("Invalid choice...Wish to continue? (Y/N)")
+        flag = check_user_interest()
+        if flag == True:
+            return True
+        else:
+            return False
             
             
 
