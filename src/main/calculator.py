@@ -73,10 +73,7 @@ def start_calculator(choice_dict):
     user_choice = int(input("Your choice: "))
     if user_choice in choice_dict.keys():
         print(f'Option picked: {user_choice} - {choice_dict[user_choice]}')
-        #value1, value2 = get_user_inputs()
         arguments_list = get_user_inputs()
-        #print(f'First variable = {value1}, Second variable = {value2}')
-        #perform_operation(user_choice, value1, value2)
         perform_operation(user_choice, arguments_list)
         print("Wish to continue? (Y/N)")
         flag = check_user_interest()
