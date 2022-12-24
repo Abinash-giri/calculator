@@ -1,4 +1,5 @@
 import math
+from functools import reduce
 
 class Calculator:
     """Calculator class"""
@@ -23,16 +24,34 @@ def get_user_inputs():
     return [int(x) for x in input('Enter two values for operation: ').split()]
 
 
-def perform_operation(user_choice, value1, value2):
-    cal_obj = Calculator(value1, value2)
-    if user_choice == 1:
-        print(f'Result = {cal_obj.addition()}')
-    elif user_choice == 2:
-        print(f'Result = {cal_obj.substraction()}')
-    elif user_choice == 3:
-        print(f'Result = {cal_obj.multiplication()}')
-    elif user_choice == 4:
-        print(f'Result = {cal_obj.divison()}')
+def perform_operation(user_choice, arg_list):
+    print(f'arg_list = {arg_list}')
+    if len(arg_list) == 2:
+        cal_obj = Calculator(arg_list[0], arg_list[1])
+        if user_choice == 1:
+            print(f'Result = {cal_obj.addition()}')
+        elif user_choice == 2:
+            print(f'Result = {cal_obj.substraction()}')
+        elif user_choice == 3:
+            print(f'Result = {cal_obj.multiplication()}')
+        elif user_choice == 4:
+            print(f'Result = {cal_obj.divison()}')
+    
+    elif len(arg_list) > 2:
+        if user_choice == 1:
+            print(f'Result = {math.fsum(arg_list)}')
+        elif user_choice == 2:
+            negate_list = list(map(lambda x: -x, arg_list[1:len(arg_list)]))
+            negate_list.insert(0, arg_list[0])
+            print(f'Result = {math.fsum(negate_list)}')
+        elif user_choice == 3:
+            print(f'Result = {reduce(lambda x,y: x*y, arg_list)}')
+        elif user_choice == 4:
+            print(f'Result = {reduce(lambda x,y: x/y, arg_list)}')
+
+    else:
+        print('Minimum 2 variables needed for operation...')
+    
 
 
 def check_user_interest():
@@ -54,9 +73,11 @@ def start_calculator(choice_dict):
     user_choice = int(input("Your choice: "))
     if user_choice in choice_dict.keys():
         print(f'Option picked: {user_choice} - {choice_dict[user_choice]}')
-        value1, value2 = get_user_inputs()
+        #value1, value2 = get_user_inputs()
+        arguments_list = get_user_inputs()
         #print(f'First variable = {value1}, Second variable = {value2}')
-        perform_operation(user_choice, value1, value2)
+        #perform_operation(user_choice, value1, value2)
+        perform_operation(user_choice, arguments_list)
         print("Wish to continue? (Y/N)")
         flag = check_user_interest()
         if flag == True:
